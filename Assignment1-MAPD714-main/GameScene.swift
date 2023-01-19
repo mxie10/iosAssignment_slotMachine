@@ -22,12 +22,13 @@ class GameScene:SKScene {
     var button: SKNode! = nil
     let objectSize = 0.4
     
+    var spintries = 0
+    
     override func didMove(to view: SKView) {
         makeBackground()
         addSlotMachine()
         initializeOpeningSlotItems()
-//        initializeScoreBoard()
-        UpdateScoreboardDetails(creditValue: "$1200", spinTriesValue: 5)
+        UpdateScoreboardDetails(creditValue: "$1200", spinTriesValue: spintries)
     }
     
     func makeBackground(){
@@ -49,38 +50,90 @@ class GameScene:SKScene {
         spinButton.position = CGPoint(x:screen.width/2,y:300)
         addChild(spinButton)
         spinButton.setScale(0.65)
+        
+        let addBet  = SKSpriteNode(imageNamed: "Plus")
+        addBet.position = CGPoint(x:95,y:407)
+        addBet.setScale(0.6)
+        addChild(addBet)
+        
+        let reduceBet  = SKSpriteNode(imageNamed: "Minus")
+        reduceBet.position = CGPoint(x:125,y:407)
+        reduceBet.setScale(0.6)
+        addChild(reduceBet)
+        
+        let maxBet  = SKSpriteNode(imageNamed: "Max")
+        maxBet.position = CGPoint(x:260,y:407)
+        maxBet.setScale(0.6)
+        addChild(maxBet)
+        
+        let clearBet  = SKSpriteNode(imageNamed: "Clear")
+        clearBet.position = CGPoint(x:290,y:407)
+        clearBet.setScale(0.6)
+        addChild(clearBet)
+        
+        let betText = SKLabelNode(fontNamed: "Arial")
+        betText.text = "Bet: "
+        betText.fontSize = 15
+        betText.fontColor = SKColor.green
+        betText.position = CGPoint(x: 165, y: 400)
+        addChild(betText)
+        
+        let resetButton  = SKSpriteNode(imageNamed: "Reset")
+        resetButton.position = CGPoint(x:100,y:200)
+        resetButton.setScale(0.6)
+        addChild(resetButton)
+        
+        let quitButton  = SKSpriteNode(imageNamed: "Quit")
+        quitButton.position = CGPoint(x:295,y:200)
+        quitButton.setScale(0.6)
+        addChild(quitButton)
+        
     }
     
     func UpdateScoreboardDetails(creditValue:String, spinTriesValue: Int)
     {
-        let creditText = SKLabelNode(fontNamed: "Myriad Pro")
         
+        let creditText = SKLabelNode(fontNamed: "Arial")
         creditText.text = "Credit: "
-        creditText.fontSize = 18
+        creditText.fontSize = 15
         creditText.fontColor = SKColor.green
         creditText.position = CGPoint(x: 100, y: 590)
         addChild(creditText)
         
-        let creditValueText = SKLabelNode(fontNamed: "Myriad Pro")
+        let creditValueText = SKLabelNode(fontNamed: "Arial")
         creditValueText.text = creditValue
-        creditValueText.fontSize = 18
+        creditValueText.fontSize = 15
         creditValueText.fontColor = SKColor.green
-        creditValueText.position = CGPoint(x:195, y: 590)
+        creditValueText.position = CGPoint(x:170, y: 590)
         addChild(creditValueText)
         
-        let spinTriesText = SKLabelNode(fontNamed: "Myriad Pro")
+        let spinTriesText = SKLabelNode(fontNamed: "Arial")
         spinTriesText.text = "Spin Tries: "
-        spinTriesText.fontSize = 18
+        spinTriesText.fontSize = 15
         spinTriesText.fontColor = SKColor.green
-        spinTriesText.position = CGPoint(x: 117, y: 570)
+        spinTriesText.position = CGPoint(x: 112, y: 570)
         addChild(spinTriesText)
         
-        let spinTriesValueText = SKLabelNode(fontNamed: "Myriad Pro")
+        let spinTriesValueText = SKLabelNode(fontNamed: "Arial")
         spinTriesValueText.text = String(spinTriesValue)
-        spinTriesValueText.fontSize = 18
+        spinTriesValueText.fontSize = 15
         spinTriesValueText.fontColor = SKColor.green
-        spinTriesValueText.position = CGPoint(x: 175, y: 570)
+        spinTriesValueText.position = CGPoint(x: 155, y: 570)
         addChild(spinTriesValueText)
+        
+        let totalWinsText = SKLabelNode(fontNamed: "Arial")
+        totalWinsText.text = "Total Wins:"
+        totalWinsText.fontSize = 15
+        totalWinsText.fontColor = SKColor.green
+        totalWinsText.position = CGPoint(x: 280, y: 590)
+        addChild(totalWinsText)
+       
+        let totalWinsValue = SKLabelNode(fontNamed: "Arial")
+        totalWinsValue.text = "$0"
+        totalWinsValue.fontSize = 15
+        totalWinsValue.fontColor = SKColor.green
+        totalWinsValue.position = CGPoint(x: 254, y: 570)
+        addChild(totalWinsValue)
         
         let statusText = SKLabelNode(fontNamed: "Impact")
         statusText.text = "LOSE"
@@ -115,36 +168,54 @@ class GameScene:SKScene {
         
     }
     
-    func initializeScoreBoard(){
-        scoreNode_onesPlace = SKSpriteNode(imageNamed: "0")
-        scoreNode_tensPlace = SKSpriteNode(imageNamed: "1")
-        scoreNode_hundredsPlace = SKSpriteNode(imageNamed: "2")
-        
-        scoreNode_onesPlace.position = CGPoint(x:120, y:screen.height/1.43)
-        addChild(scoreNode_onesPlace)
-        scoreNode_tensPlace.position = CGPoint(x:80, y:screen.height/1.43)
-        addChild(scoreNode_tensPlace)
-        scoreNode_hundredsPlace.position = CGPoint(x:40, y:screen.height/1.43)
-        addChild(scoreNode_hundredsPlace)
-        
-        scoreNode_onesPlace.setScale(0.8)
-        scoreNode_tensPlace.setScale(0.8)
-        scoreNode_hundredsPlace.setScale(0.8)
-    }
+    
 }
 
 extension GameScene{
+    func touchDown(atPoint pos : CGPoint) {
+        //when Spin area button is clicked
+        if(pos.x >= 54 && pos.x <= 340 &&
+           pos.y <= 332 && pos.y >= 226
+           )
+        {
+//            spintries = spintries + 1
+//            UpdateScoreboardDetails(creditValue: "$1200", spinTriesValue: spintries)
+            
+            spinButton.removeFromParent()
+        }
+    }
+
+    func touchMoved(toPoint pos : CGPoint) {
+        
+    }
+    
+    func touchUp(atPoint pos : CGPoint) {
+       
+        //when Spin area button is clicked /effect
+        if(pos.x >= 54 && pos.x <= 340 &&
+           pos.y <= 332 && pos.y >= 226
+           )
+        {
+            addChild(spinButton)
+     
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+
+        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    }
+    
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 }
 

@@ -19,18 +19,12 @@ struct ContentView: View {
         return scene
     }
     
-//    @State var options = ["Swift", "Kotlin", "Java", "JavaScript"] // 1
-//    @State var selectedItem = "Swift" // 2
-    
+
     var body: some View {
         SpriteView(scene:scene)
             .frame(width:screen.width,height: screen.height)
             .ignoresSafeArea()
-//        Picker("Pick a language", selection: $selectedItem) { // 3
-//                   ForEach(options, id: \.self) { item in // 4
-//                       Text(item) // 5
-//                   }
-//               }
+
     }
 }
 
