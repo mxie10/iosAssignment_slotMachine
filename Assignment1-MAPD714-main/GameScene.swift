@@ -17,11 +17,17 @@ class GameScene:SKScene {
     var scoreNode_tensPlace: SKSpriteNode!
     var scoreNode_hundredsPlace: SKSpriteNode!
     var slotMachine_header: SKSpriteNode!
+    var slotMachine: SKSpriteNode!
+    var spinButton: SKSpriteNode!
     var button: SKNode! = nil
+    let objectSize = 0.4
+    
     override func didMove(to view: SKView) {
         makeBackground()
+        addSlotMachine()
         initializeOpeningSlotItems()
-        initializeScoreBoard()
+//        initializeScoreBoard()
+        UpdateScoreboardDetails(creditValue: "$1200", spinTriesValue: 5)
     }
     
     func makeBackground(){
@@ -31,28 +37,82 @@ class GameScene:SKScene {
         addChild(background)
     }
     
+    func addSlotMachine(){
+        
+     //   print("width: \(screen.width) | height: \(screen.height)")
+        slotMachine = SKSpriteNode(imageNamed: "SlotMachine")
+        slotMachine.position = CGPoint(x:screen.width/2,y:screen.height/2)
+        addChild(slotMachine)
+        slotMachine.setScale(0.65)
+        
+        spinButton = SKSpriteNode(imageNamed: "spinButton")
+        spinButton.position = CGPoint(x:screen.width/2,y:300)
+        addChild(spinButton)
+        spinButton.setScale(0.65)
+    }
+    
+    func UpdateScoreboardDetails(creditValue:String, spinTriesValue: Int)
+    {
+        let creditText = SKLabelNode(fontNamed: "Myriad Pro")
+        
+        creditText.text = "Credit: "
+        creditText.fontSize = 18
+        creditText.fontColor = SKColor.green
+        creditText.position = CGPoint(x: 100, y: 590)
+        addChild(creditText)
+        
+        let creditValueText = SKLabelNode(fontNamed: "Myriad Pro")
+        creditValueText.text = creditValue
+        creditValueText.fontSize = 18
+        creditValueText.fontColor = SKColor.green
+        creditValueText.position = CGPoint(x:195, y: 590)
+        addChild(creditValueText)
+        
+        let spinTriesText = SKLabelNode(fontNamed: "Myriad Pro")
+        spinTriesText.text = "Spin Tries: "
+        spinTriesText.fontSize = 18
+        spinTriesText.fontColor = SKColor.green
+        spinTriesText.position = CGPoint(x: 117, y: 570)
+        addChild(spinTriesText)
+        
+        let spinTriesValueText = SKLabelNode(fontNamed: "Myriad Pro")
+        spinTriesValueText.text = String(spinTriesValue)
+        spinTriesValueText.fontSize = 18
+        spinTriesValueText.fontColor = SKColor.green
+        spinTriesValueText.position = CGPoint(x: 175, y: 570)
+        addChild(spinTriesValueText)
+        
+        let statusText = SKLabelNode(fontNamed: "Impact")
+        statusText.text = "LOSE"
+        statusText.fontSize = 40
+        statusText.fontColor = SKColor.green
+        statusText.position = CGPoint(x: screen.width/2, y: 628)
+        addChild(statusText)
+    }
+    
+    
     func initializeOpeningSlotItems(){
         
         slotMachine_header = SKSpriteNode(imageNamed: "header")
-        slotMachine_header.position = CGPoint(x:screen.width/2,y:screen.height/1.17)
+        slotMachine_header.position = CGPoint(x:screen.width/2,y:760)
         addChild(slotMachine_header)
-        slotMachine_header.setScale(0.7)
+        slotMachine_header.setScale(objectSize)
         
         slot_firstItem = SKSpriteNode(imageNamed: "strawburry")
-        slot_firstItem.position = CGPoint(x:screen.width/2,y:screen.height/3.0)
+        slot_firstItem.position = CGPoint(x:116,y:470)
         addChild(slot_firstItem)
+        slot_firstItem.setScale(objectSize)
         
         slot_secondItem = SKSpriteNode(imageNamed: "banana")
-        slot_secondItem.position = CGPoint(x:screen.width/3.5,y:screen.height/1.8)
+        slot_secondItem.position = CGPoint(x:195,y:470)
         addChild(slot_secondItem)
+        slot_secondItem.setScale(objectSize)
         
         slot_thirdItem = SKSpriteNode(imageNamed: "seven")
-        slot_thirdItem.position = CGPoint(x:screen.width/1.4,y:screen.height/1.8)
+        slot_thirdItem.position = CGPoint(x:273,y:470)
         addChild(slot_thirdItem)
+        slot_thirdItem.setScale(objectSize)
         
-        button = SKSpriteNode(color: .red, size: CGSize(width: 280, height: 60))
-        button.position = CGPoint(x:self.frame.midX, y:120);
-        addChild(button)
     }
     
     func initializeScoreBoard(){
